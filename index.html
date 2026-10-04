@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Calculator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Optional History Panel (Desktop Side, Mobile Bottom/Hidden) -->
+        <aside class="history-panel">
+            <div class="history-header">
+                <h2>History</h2>
+                <button id="clear-history" class="btn-icon" aria-label="Clear history">Clear</button>
+            </div>
+            <ul id="history-list" class="history-list">
+                <!-- History items rendered here -->
+            </ul>
+        </aside>
+
+        <!-- Main Calculator UI -->
+        <main class="calculator-wrapper">
+            <div class="titles">
+                <h1>CODEALPHA CALCULATOR</h1>
+                <p>Simple. Fast. Precise.</p>
+            </div>
+
+            <div class="calculator">
+                <!-- Display Section -->
+                <div class="display">
+                    <div class="expression" id="expression"></div>
+                    <div class="result" id="result">0</div>
+                </div>
+
+                <!-- Keypad Section -->
+                <div class="keypad">
+                    <!-- Row 1 -->
+                    <button class="btn btn-utility" data-action="clear" aria-label="All Clear">AC</button>
+                    <button class="btn btn-utility" data-action="delete" aria-label="Delete">DEL</button>
+                    <button class="btn btn-operator" data-action="operator" data-value="%" aria-label="Percentage">%</button>
+                    <button class="btn btn-operator" data-action="operator" data-value="/" aria-label="Divide">&divide;</button>
+                    
+                    <!-- Row 2 -->
+                    <button class="btn btn-number" data-action="number" data-value="7">7</button>
+                    <button class="btn btn-number" data-action="number" data-value="8">8</button>
+                    <button class="btn btn-number" data-action="number" data-value="9">9</button>
+                    <button class="btn btn-operator" data-action="operator" data-value="*" aria-label="Multiply">&times;</button>
+                    
+                    <!-- Row 3 -->
+                    <button class="btn btn-number" data-action="number" data-value="4">4</button>
+                    <button class="btn btn-number" data-action="number" data-value="5">5</button>
+                    <button class="btn btn-number" data-action="number" data-value="6">6</button>
+                    <button class="btn btn-operator" data-action="operator" data-value="-" aria-label="Subtract">&minus;</button>
+                    
+                    <!-- Row 4 -->
+                    <button class="btn btn-number" data-action="number" data-value="1">1</button>
+                    <button class="btn btn-number" data-action="number" data-value="2">2</button>
+                    <button class="btn btn-number" data-action="number" data-value="3">3</button>
+                    <button class="btn btn-operator" data-action="operator" data-value="+" aria-label="Add">+</button>
+                    
+                    <!-- Row 5 -->
+                    <button class="btn btn-number btn-zero" data-action="number" data-value="0">0</button>
+                    <button class="btn btn-number" data-action="decimal" data-value=".">.</button>
+                    <button class="btn btn-equals" data-action="calculate" aria-label="Equals">=</button>
+                </div>
+            </div>
+            
+            <div class="footer-text">
+                <p>Built with HTML, CSS & JavaScript</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

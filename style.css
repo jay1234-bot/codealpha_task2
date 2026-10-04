@@ -1,0 +1,391 @@
+/* ==========================================================================
+   CSS VARIABLES & RESET
+   ========================================================================== */
+:root {
+    /* Colors */
+    --bg-app: #080808;
+    --bg-calc: rgba(22, 22, 24, 0.75);
+    --bg-panel: rgba(18, 18, 20, 0.6);
+    
+    /* Button Colors */
+    --btn-num-bg: rgba(255, 255, 255, 0.03);
+    --btn-num-hover: rgba(255, 255, 255, 0.08);
+    --btn-op-bg: rgba(255, 149, 0, 0.1);
+    --btn-op-hover: rgba(255, 149, 0, 0.2);
+    --btn-op-text: #FF9F0A;
+    --btn-util-bg: rgba(255, 255, 255, 0.08);
+    --btn-util-hover: rgba(255, 255, 255, 0.15);
+    --btn-eq-bg: #FF9F0A;
+    --btn-eq-hover: #FFA92A;
+    
+    /* Text Colors */
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.5);
+    --text-error: #FF453A;
+    
+    /* Borders & Shadows */
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.5);
+    
+    /* Typography */
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-app);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 159, 10, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.05) 0%, transparent 40%),
+        linear-gradient(to bottom right, #080808, #111111);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+.app-container {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    max-width: 1000px;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   TITLES & FOOTER
+   ========================================================================== */
+.titles {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.titles h1 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.titles p {
+    font-size: 0.85rem;
+    color: var(--btn-op-text);
+    font-weight: 500;
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   CALCULATOR BODY
+   ========================================================================== */
+.calculator-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculator {
+    background: linear-gradient(145deg, rgba(30, 30, 32, 0.8), rgba(18, 18, 20, 0.6));
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 36px;
+    padding: 28px;
+    width: 360px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* ==========================================================================
+   DISPLAY
+   ========================================================================== */
+.display {
+    text-align: right;
+    margin-bottom: 24px;
+    padding: 20px 10px 10px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.expression {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    min-height: 24px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+}
+
+.result {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--transition-fast);
+}
+
+.result.error {
+    font-size: 1.5rem;
+    color: var(--text-error);
+    margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   KEYPAD
+   ========================================================================== */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* Buttons */
+.btn {
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: 18px;
+    height: 64px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-fast);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.btn:active, .btn.active {
+    transform: scale(0.92);
+}
+
+.btn-zero {
+    grid-column: span 2;
+    border-radius: 20px;
+}
+
+/* Number Buttons */
+.btn-number {
+    background: var(--btn-num-bg);
+    color: var(--text-primary);
+}
+
+.btn-number:hover {
+    background: var(--btn-num-hover);
+    transform: translateY(-1px);
+}
+
+/* Operator Buttons */
+.btn-operator {
+    background: var(--btn-op-bg);
+    color: var(--btn-op-text);
+    font-size: 1.5rem;
+}
+
+.btn-operator:hover {
+    background: var(--btn-op-hover);
+    transform: translateY(-1px);
+}
+
+/* Utility Buttons (AC, DEL) */
+.btn-utility {
+    background: var(--btn-util-bg);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.btn-utility:hover {
+    background: var(--btn-util-hover);
+    transform: translateY(-1px);
+}
+
+/* Equals Button */
+.btn-equals {
+    background: var(--btn-eq-bg);
+    color: #000;
+    font-size: 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 159, 10, 0.3);
+}
+
+.btn-equals:hover {
+    background: var(--btn-eq-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 159, 10, 0.4);
+}
+
+/* ==========================================================================
+   HISTORY PANEL
+   ========================================================================== */
+.history-panel {
+    background: var(--bg-panel);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    width: 280px;
+    height: 520px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px; /* Align with calc top roughly */
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.history-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.btn-icon {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-icon:hover {
+    background: var(--btn-util-bg);
+    color: var(--text-primary);
+}
+
+.history-list {
+    list-style: none;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 8px;
+}
+
+/* Scrollbar */
+.history-list::-webkit-scrollbar {
+    width: 4px;
+}
+.history-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+
+.history-item {
+    text-align: right;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background var(--transition-fast);
+}
+
+.history-item:hover {
+    background: var(--btn-num-hover);
+}
+
+.hist-expr {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.hist-res {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 40px;
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+        gap: 30px;
+    }
+    
+    .history-panel {
+        width: 340px;
+        height: 250px;
+        margin-top: 0;
+    }
+    
+    body {
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .calculator {
+        width: 100%;
+        max-width: 340px;
+        padding: 20px;
+        border-radius: 28px;
+    }
+    
+    .btn {
+        height: 56px;
+        border-radius: 16px;
+    }
+    
+    .history-panel {
+        width: 100%;
+        max-width: 340px;
+    }
+    
+    .result {
+        font-size: 2.5rem;
+    }
+}
